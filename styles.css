@@ -1,0 +1,17 @@
+@media (prefers-color-scheme: light) {
+	* {
+		color: black;
+		background-color: white;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	* {
+		color: white;
+		background-color: black;
+	}
+}
+
+#date {
+	font-family: 'Courier New', Courier, monospace;
+}

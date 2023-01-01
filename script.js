@@ -3,7 +3,9 @@ function replace_date(id) {
 
 	date = de_mil_date(now);
 
-	document.getElementById(id).innerText = `The current time is: ${date}`;
+	document.getElementById(id).innerText = date;
+
+	console.log("date replaced");
 }
 
 function de_mil(number, max) {
@@ -17,20 +19,16 @@ function de_mil(number, max) {
 function de_mil_date(date) {
 	// let month = de_mil(date.getMonth(), 6);
 	// let day = de_mil(date.getDate(), 16); // 16 because I'd rather not loop inside months, and decimals aren't an option
-	let hour = de_mil(date.getHours(), 12);
-	let minute = de_mil(date.getMinutes(), 30);
-	let second = de_mil(date.getSeconds(), 30);
-	let millisecond = de_mil(date.getMilliseconds(), 500);
+
+	let hour = make_length(5, de_mil(date.getHours(), 12));
+	let minute = make_length(5, de_mil(date.getMinutes(), 30));
+	let second = make_length(5, de_mil(date.getSeconds(), 30));
+	let millisecond = make_length(6, de_mil(date.getMilliseconds(), 500));
 
 	return ( /*`${date.getDate()} ${month}/${day}/${date.getFullYear()} `*/ `${hour}:${minute}:${second}:${millisecond}` )
 }
 
-async function run(id) {
-	replace_date(id);
-
-	await sleep(1)
-}
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
+function make_length(length, string) {
+	if ( string.length > length ) { return ( string ); }
+	return ( "0".repeat(length - string.length) + string )
 }
