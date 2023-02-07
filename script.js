@@ -16,7 +16,7 @@ async function draw_date_to_canvas(id) {
 	context.fillStyle = (color_scheme == "light") ? "black" : "white";
 	
 	const text_size_px = 20;
-	context.font = `${text_size_px}px monospace`; // Not super sure about this line
+	context.font = `${text_size_px}px 'Courier New', Courier, monospace`; // Not super sure about this line 
 
 	
 	while (true) {
