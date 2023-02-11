@@ -12,14 +12,21 @@ async function draw_date_to_canvas(id) {
 	const canvas = document.getElementById(id);
 	const context = canvas.getContext("2d"); // Note `id` needs to point to a canvas
 	
-	const color_scheme = window.getComputedStyle(document.documentElement).getPropertyValue('content').replace(/"/g, '');
-	context.fillStyle = (color_scheme == "light") ? "black" : "white";
-	
+	function updateTheme() {
+			
+		const color_scheme = window.getComputedStyle(document.documentElement).getPropertyValue('content').replace(/"/g, '');
+		context.fillStyle = (color_scheme == "light") ? "black" : "white";
+	}
 	const text_size_px = 20;
 	context.font = `${text_size_px}px 'Courier New', Courier, monospace`; // Not super sure about this line 
-
-	
+	updateTheme();
+	let i = 0;
+	let checkThemeTimeoutMs = 20; //Specifies how often the script will check for a theme update in miliseconds.
 	while (true) {
+		if (i >= checkThemeTimeoutMs) {
+			updateTheme(); //Checks for theme update
+			i = 0; //resets counter
+		}
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.fillText(de_mil_date(new Date()), 0, 15);
 		await new Promise(
@@ -31,6 +38,7 @@ async function draw_date_to_canvas(id) {
 						resolve()
 					}, 1 // ms I presume
 				); 
+			i++;
 			}
 		) // .then(function(){$("#output")})
 		// break;
