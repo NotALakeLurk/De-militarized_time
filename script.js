@@ -27,9 +27,10 @@ function start() { // This function runs once when the page refreshes
 async function execute() {
 	// Run a set amount of cycles before updating theme
 	for (let i = 0; i < updateCycles; i++) {
-		drawTimeToCanvas();
+		const time = deMilitarizeDate(new Date());
+		drawTimeToCanvas(time);
 		await sleep(1);
-	} 
+	}
 	setFillStyleFromTheme();
 }
 
@@ -42,9 +43,9 @@ function setFillStyleFromTheme() {
 	context.fillStyle = (colorScheme == "light") ? "black" : "white";
 }
 
-function drawTimeToCanvas() {
+function drawTimeToCanvas(time) {
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.fillText(deMilitarizeDate(new Date()), 0, 15);
+	context.fillText(time, 0, 15);
 }
 
 function deMilitarizeNumber(number, max) {
